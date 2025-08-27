@@ -90,6 +90,7 @@ public class Admin {
             this.role = admin.role;
             return this;
         }
+
         public Admin build() {return new Admin(this);}
 
     }
