@@ -11,3 +11,4 @@ public interface IWarehouseRepository {
     boolean delete(String warehouseId);
     List<Warehouse> getAll();
 }
+
