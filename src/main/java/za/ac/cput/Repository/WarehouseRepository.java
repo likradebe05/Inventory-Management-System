@@ -7,3 +7,4 @@ import za.ac.cput.Domain.Warehouse;
 @Repository
 public interface WarehouseRepository extends JpaRepository<Warehouse, String> {
 }
+
