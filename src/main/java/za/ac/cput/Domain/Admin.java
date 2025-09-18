@@ -13,7 +13,23 @@ public class Admin {
     private String userName;
 
     private String password;
-    private String role;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.ADMIN; // Default to ADMIN role
+
+    // Spring Security compatibility fields
+    @Column(nullable = false)
+    private boolean enabled = true;
+
+    @Column(nullable = false)
+    private boolean accountNonExpired = true;
+
+    @Column(nullable = false)
+    private boolean accountNonLocked = true;
+
+    @Column(nullable = false)
+    private boolean credentialsNonExpired = true;
 
     protected Admin() {}
 
@@ -21,7 +37,11 @@ public class Admin {
         this.adminId = builder.adminId;
         this.userName = builder.userName;
         this.password = builder.password;
-        this.role = builder.role;
+        this.role = builder.role != null ? builder.role : Role.ADMIN; // Default to ADMIN
+        this.enabled = builder.enabled;
+        this.accountNonExpired = builder.accountNonExpired;
+        this.accountNonLocked = builder.accountNonLocked;
+        this.credentialsNonExpired = builder.credentialsNonExpired;
 
 
     }
@@ -37,8 +57,55 @@ public class Admin {
         return password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
+    }
+
+    // Spring Security compatibility methods
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    /**
+     * Get the Spring Security authority
+     */
+    public String getAuthority() {
+        return role.getAuthority();
+    }
+
+    /**
+     * Get role as string (for backward compatibility)
+     */
+    public String getRoleString() {
+        return role.name();
     }
 
 
@@ -60,7 +127,11 @@ public class Admin {
         private Long adminId;
         private String userName;
         private String password;
-        private String role;
+        private Role role = Role.ADMIN; // Default
+        private boolean enabled = true;
+        private boolean accountNonExpired = true;
+        private boolean accountNonLocked = true;
+        private boolean credentialsNonExpired = true;
 
 
         public Builder setAdminId(Long adminId) {
@@ -78,16 +149,45 @@ public class Admin {
             return this;
         }
 
-        public Builder setRole(String role) {
+        public Builder setRole(Role role) {
             this.role = role;
             return this;
         }
 
-        public Admin.Builder copy(Admin admin) {
+        public Builder setRole(String roleString) {
+            this.role = Role.fromString(roleString);
+            return this;
+        }
+
+        public Builder setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder setAccountNonExpired(boolean accountNonExpired) {
+            this.accountNonExpired = accountNonExpired;
+            return this;
+        }
+
+        public Builder setAccountNonLocked(boolean accountNonLocked) {
+            this.accountNonLocked = accountNonLocked;
+            return this;
+        }
+
+        public Builder setCredentialsNonExpired(boolean credentialsNonExpired) {
+            this.credentialsNonExpired = credentialsNonExpired;
+            return this;
+        }
+
+        public Builder copy(Admin admin) {
             this.adminId = admin.adminId;
             this.userName = admin.userName;
             this.password = admin.password;
             this.role = admin.role;
+            this.enabled = admin.enabled;
+            this.accountNonExpired = admin.accountNonExpired;
+            this.accountNonLocked = admin.accountNonLocked;
+            this.credentialsNonExpired = admin.credentialsNonExpired;
             return this;
         }
 
