@@ -27,6 +27,12 @@ public class ProductService implements IProductService {
         return productRepo.findById(productId).orElse(null);
     }
 
+    // Overload using Long-based primary key lookup
+    public Product findByProductId(Long productId) {
+        if (productId == null) return null;
+        return productRepo.findByProductId(productId);
+    }
+
     @Override
     public Product update(Product obj) {
         return productRepo.save(obj);
