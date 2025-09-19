@@ -1,6 +1,7 @@
 package za.ac.cput.Repository;
 
 import za.ac.cput.Domain.Product;
+
 import java.util.List;
 
 public interface IProductRepository {

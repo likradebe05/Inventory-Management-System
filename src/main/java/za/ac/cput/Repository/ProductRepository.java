@@ -11,5 +11,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     List<Product> findByCategoryId(String categoryId);
     List<Product> findBySupplierId(String supplierId);
     List<Product> findByPriceGreaterThan(double price);
+
+    // Finder using the actual primary key type (Long)
+    Product findByProductId(Long productId);
 }
 
