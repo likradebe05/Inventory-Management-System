@@ -19,12 +19,12 @@ public class Product {
     private String location;
     private String categoryId;
     private String supplierId;
-
+    
     // Image related fields
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] imageData;
-
+    
     private String imageContentType;
     private String originalImageName;
 
